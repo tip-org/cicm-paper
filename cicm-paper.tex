@@ -1,0 +1,108 @@
+\documentclass{llncs}
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows,calc}
+
+
+%\usepackage{url}
+\usepackage{multirow}
+\usepackage{listings}
+\usepackage{amsmath}  % for equation*
+\usepackage{array}    % for tabular
+\usepackage{verbatim} % for comment
+\usepackage{wrapfig}
+\usepackage[final]{microtype}
+\usepackage[pdfborder={0 0 0}]{hyperref}
+\usepackage{tabularx}
+
+\newcommand\forAll[1]{\forall \, #1 \, . \,}
+\newcommand\forAllII[2]{\forall \, #1 \, #2 \, . \,}
+
+\newcommand\propno[1]{(\emph{#1})}
+\newcommand\hs[1]{\texttt{#1}}
+
+% \raggedbottom
+
+\lstnewenvironment{code}[1][]
+  {\noindent
+   \vspace{-0.5\baselineskip}
+   \lstset{basicstyle=\ttfamily,
+           frame=single,
+           language=Haskell,
+           keywordstyle=\color{black},
+           #1}
+   \fontsize{8pt}{8pt}\selectfont}
+  {}
+
+\newcommand\NOTE[1]{} % \mbox{}\marginpar{\fontsize{8pt}{8pt}\selectfont\raggedright\hspace{0pt}\emph{#1}}}
+
+\def\maindocument{} % To tell tikz images that they are not stand alone
+
+\begin{document}
+
+\title{TIP: Tons of Inductive Problems}
+
+\author{Moa Johansson \and Dan Ros\'en \and Nicholas Smallbone \and Koen Claessen}
+\institute{Department of Computer Science and Engineering, Chalmers University of Technology
+	\email{\{jomoa,danr,nicsma,koen\}@chalmers.se}
+	}
+
+\authorrunning{Johansson, Ros\'en, Smallbone, Claessen}
+\titlerunning{Integrating Theory Exploration in a Proof Assistant}
+
+\maketitle
+
+\begin{abstract}
+
+New testsuite (format)!
+\end{abstract}
+
+\section{Introduction}
+
+goal: a format with explicit function definitions (hipspec, zeno, isaplanner, acl2, dafny),
+      but also usable for provers that are not oriented towards functional programs (cvc4, new spass)
+      (but still use explicit datatype definitions (?)).
+
+\section{The TIP language/format}
+
+based on SMT-LIB
+  differences:
+    recursive define-fun (note: http://stackoverflow.com/questions/7740556/equivalent-of-define-fun-in-z3-api#7745041)
+    polymorphism
+    match-expression
+    + prove top level statement
+    + define-datatype instead of define-datatypes
+         (due to mutually recursive datatypes might differ in kind because of polymorphism)
+  advantages:
+    can import well defined theories from SMTLIB, such as linear arithmetic
+    easy to parse
+
+bnf + example
+
+\section{The benchmarks}
+
+https://github.com/danr/tip-benchmarks
+
+from the hipspec-cade paper. two testsuites: overlap?
+
++ our own examples
+
++ koen's new examples
+
+all functions in the benchmarks terminate. the format does not presuppose this
+
+\section{Tools}
+
+done: ghc frontend (subset of Haskell). example
+
+done: lambda lifting...
+
+could be done before deadline: parser. tip -> smtlib.
+
+before camera ready deadline (work in progress): monomorphiser, tip -> other formats
+
+\section{Summary}
+
+\bibliographystyle{plain}
+\bibliography{bibfile}
+
+\end{document}
