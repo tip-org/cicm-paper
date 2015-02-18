@@ -73,28 +73,25 @@ The number of inductive theorem provers has been increasing, both with specialis
 
 To ease evaluation, development and compare the relative strengths of the different systems it is important to have good, standard benchmarks. In this paper we describe initial efforts to collect such benchmarks for inductive theorem provers. The benchmarks are publicly available at \url{https://github.com/tip-org/benchmarks}. We invite the community to submit additional problems and challenges and expect this benchmark suite to continuously grow and encourage further development of inductive theorem provers. 
 
-The benchmarks are currently expressed in a subset of the WhyML specification language \cite{whyML}. We choose this format as the Why3 system already support translation tools from WhyML to various other formats, such as SMT-LIB and versions of TPTP. In addition, it is human readable and has a range of desirable properties which we describe in \S \ref{sec:format}. 
+In this paper, we focus on the contribution of a standard benchmark set for inductive theorem provers and do not yet discuss any special-purpose language features for such inductive problems. The benchmarks are therefore currently expressed in a subset of the WhyML specification language from the Why3 program verification system \cite{Why3}. We have chosen this format as the Why3 system already support translation tools from WhyML to various other common formats, such as SMT-LIB and versions of TPTP. 
+In addition, the WhyML language is quite human readable.% and has a range of desirable properties which we describe in more detail in \S \ref{sec:format}.  
+The Why3 system is already connected to a wide variety of automated and interactive provers, including  Alt-Ergo, CVC3, Z3, E, SPASS, Vampire, Coq and PVS. We hope that the new benchmarks suite also will encourage the connection of automated inductive theorem provers to Why3. 
+
 
 \section{The Benchmark Format}
 \label{sec:format}
 
 \section{Sample Benchmarks}
+In this section we give a short overview of the problems currently available in the repository. We expect more to be added.
 
-The benchmarks are publicly available at \url{https://github.com/tip-org/benchmarks}. 
+\subsection{IsaPlanner's Rippling and Case-Analysis Benchmarks}
+This set of 85 problems comes form the evaluation of IsaPlanner's rippling-heuristic for guiding rewriting in inductive proofs in the context of functions with case- and if-statements \cite{IsaPcase}. It has been used in the evaluation of many of the recent inductive theorem provers and includes theorems about lists, natural numbers and binary trees. The proofs are relatively easy, most of the theorems can be proved by structural induction using only the function definitions and only 15 require auxiliary lemmas to be discovered.
 
-Benchmarks are written in a subset of the WhyML language, with the recent extension to support higher-order functions.
+\subsection{Productive Use of Failure Benchmarks}
+This is another benchmark suite which has been used to evaluate several recent provers. It consists of 50 theorems about lists and natural numbers and originates from evaluation of techniques for discovering auxiliary lemmas in the CLAM prover \cite{productiveuse}. The original paper did not provide definitions for the functions used in the benchmarks, so the definitions provided here comes from the evaluation of the HipSpec system \cite{hipspecCADE}. These proofs are generally a bit harder, and may require additional lemmas to be found and proved (by another induction) or generalisation of the conjecture in order to strengthen the inductive hypothesis. 
 
-Which tools/translationgs are available for WhyML?
-
-How to contribute benchmarks?
-
-from the hipspec-cade paper. two testsuites: overlap?
-
-+ our own examples
-
-+ koen's new examples
-
-all functions in the benchmarks terminate. the format does not presuppose this
+\subsection{More benchmarks?}
+H.O., merge sort etc?
 
 %\section{Tools}
 %
@@ -106,10 +103,21 @@ all functions in the benchmarks terminate. the format does not presuppose this
 %
 %before camera ready deadline (work in progress): monomorphiser, tip -> other formats
 
+\subsection{Contribute to TIP}
+Say something about how to contribute problems. 
+
+- E.g. need to run through some Why3 tools to verify syntax? Request access to TIP/org repo and so on...
+
+- Should add this info (and updated info) in a README in the repo I suppose.
+
 \section{Conclusion and Further Work}
-- Tools for conversion to other formats
+- A standard benchmark format for problems involving induction. Questions about termination of functions, etc. This paper as a starting point for encouraging discussion in the inductive theorem proving community of such a format.
 
 - Solicit submissions of additional benchmarks and challenge problems.
+
+- Another use of the benchmarks is to evaluate theory exploration systems, how many of the benchmarks can be automatically discovered? Can be used for precision/recall analysis to evaluate the quality and interestingness of a theory explorer.
+
+- Also include non-theorems (further work). Integration of proving and counter-example finding, e.g. if user made mistake in property. Evaluate tools like QuickCheck etc.
 
 \bibliographystyle{plain}
 \bibliography{bibfile}
