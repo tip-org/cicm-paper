@@ -155,12 +155,15 @@ This set of 85 problems comes from the evaluation of IsaPlanner's rippling-heuri
 This is another benchmark suite which has been used to evaluate several recent provers. It consists of 50 theorems about lists and natural numbers and originates from evaluation of techniques for discovering auxiliary lemmas in the CLAM prover \cite{productiveuse}. The original paper did not provide definitions for the functions used in the benchmarks, so the definitions provided here come from the evaluation of the HipSpec system \cite{hipspecCADE}. These proofs are generally a bit harder, and may require additional lemmas to be found and proved (by another induction) or generalisation of the conjecture in order to strengthen the inductive hypothesis. 
 
 \subsection{New TIP Benchmarks}
-This set contains 63 new benchmarks including, amongst others, properties of integers implemented using natural numbers from the Agda standard library\footnote{\url{https://github.com/agda/agda-stdlib}}, problems about natural numbers in binary representation, problems about regular expressions, binary search trees, grammars and skew heaps. The problems about regular expressions, grammars and heaps have to our knowledge not been fully automated yet and are offered as challenges! 
+This set contains 63 new benchmarks including, amongst others,
+properties of the Agda standard
+library\footnote{\url{https://github.com/agda/agda-stdlib}}
+implementation of integers on top of natural numbers, problems about natural numbers in binary representation, problems about regular expressions, binary search trees, grammars and skew heaps. The problems about regular expressions, grammars and heaps have to our knowledge not been fully automated yet and are offered as challenges!
 
 \section{Contribute to TIP}
 We invite the theorem proving community to contribute additional inductive benchmarks and challenge problems to TIP. Instructions for how to submit new problems can be found in the TIP repository README file (see \url{https://github.com/tip-org/benchmarks}).
 
-For automated translation between Haskell and WhyML, HipSpec provides some useful tools which can be found at \url{https://github.com/danr/hipspec/tree/print-why3}
+For automated translation between Haskell and WhyML, HipSpec provides some useful tools which can be found at \url{https://github.com/danr/hipspec/tree/print-why3}.
 
 \section{Conclusion and Further Work}
 TIP is intended to be a standard benchmark suite for developers and users of inductive theorem provers. We hope that this initiative will ease comparison and evaluation of systems and spur further collaboration and development by attracting submissions of additional challenge problems from the community. 
@@ -169,9 +172,9 @@ In addition to serving as a standard benchmark suite for inductive provers, the 
 
 The TIP benchmarks are currently expressed in a subset of WhyML. If we want to use the Why3 translation tools to other formats, there are some restrictions. Functions are for instance required to be provably terminating by the Why3 termination checker, which might not always be the case (e.g. it fails to prove termination for many functions that are not structurally recursive).  
 In the future, we therefore expect to support a richer language, and will provide tools to help developers use the TIP format.
-We may also want to include problems about lazy functions and will then need to extend the format to allow also non-terminating functions.  
+We may also want to include problems about lazy functions and will then need to extend the format to also allow non-terminating functions.
 %We may in the future perhaps also want to include problems featuring functions in a programming language with lazy evaluation. 
-Another extension is to allow also non-theorems among the benchmarks, for evaluation of tools for counter-example finding.  We see this paper as a starting point to encourage further discussion in the inductive theorem proving community about what future format(s) for inductive problems should look like.
+Another extension is to also allow non-theorems among the benchmarks, for evaluation of tools for counter-example finding.  We see this paper as a starting point to encourage further discussion in the inductive theorem proving community about what future format(s) for inductive problems should look like.
 
 
 
