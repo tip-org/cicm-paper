@@ -19,7 +19,9 @@ When designing our language extensions, we had these criteria in mind:
    We are however incompatible with SMT-LIB whenever it's needed to avoid
    breaking the first criterion.
 3. The format should be accessible: easy to understand and easy for other
-   tools to use.
+   tools to use. We have written a tool which removes some of the advanced
+   features (such as higher-order functions) from problems to help provers
+   that don't support those features.
 
 ## Example 1
 
@@ -48,12 +50,23 @@ type of the scrutinee and the data type declarations).
 
 TIP also allows the user to define their functions in a more traditional
 SMT-LIB syntax, using if-then-else with discriminator and projector functions
-(in this case `is-nat` and `pred`). The TIP tool is able to translate between
+(in this case `is-Nat` and `pred`). The TIP tool is able to translate between
 these syntaxes. Here is how the example above looks with
 match removed:
 
 ```{.tip-include .match-to-if}
 nat.smt2
+```
+
+Match expressions can also have a default branch which matches all
+other pattern than those explicitly listed. This is sometimes useful
+when there are many constructors. However, in the example above, either of the patterns `Zero` or 
+`(Succ n)` can be replaced with `default`. As an example, this is how
+it looks with the `Succ` case transformed:
+
+
+```tip-include
+nat-default.smt2
 ```
 
 Some provers like to distinguish between axioms and conjectures, and in many
@@ -85,34 +98,37 @@ It is a bit broken because you have to first define all the signatures, and then
  
 ## Example 2
 
-This is an example of right identity of append over polymorphic lists:
+TIP also supports polymorphism.
+Here is an example showing the right identity of append over polymorphic lists:
 
 ```tip-include
 list.smt2
 ```
 
-We allow parametric declarations and assertions
-(\cite{smtlam}, and suggested for inclusion in CVC4 \cite{cvc4parPR}),
-using the @par@ keyword.
+We allow polymorphic datatypes, declarations and assertions using the syntax
+suggested in @smtlam, which is currently waiting to be merged into CVC4
+(@cvc4parPR). This syntax uses the syntactic form `(par (A) ...)` to quantify
+over the type variable `A`. Only rank-1 polymorphism is supported.
 
 Expressions can be annotated with their type with the `as` keyword.
-When an identifier of function application does not fully specify the 
-type instantiations of its arguments by only looking at its type
-and the types of its arguments, this type information is added.
+When the type of a function application is not fully specified
+by only looking the types of its arguments, the problem must use `as` to
+specify the type.
 
 Polymorphism can be removed by specialising the program at some ground
 types, but this is not necessarily complete. Another method is to 
-encode typing information over monomorphic terms. We want to add
-techniques for this ton the tip toolchain.
+encode typing information over monomorphic terms. We plan to add
+techniques for this to the TIP toolchain. For now, provers must natively
+support polymorphism if they want to solve polymorphic problems.
 
-When removing a polymorphic `assert-not`, new skolem types needs to be
-introduced:
+When translating `assert-not` into `assert`, any polymorphic type variables
+are Skolemised:
 
 ```{.tip-include .negate-conjecture}
 list.smt2
 ```
 
-This is the same problem in Why3 syntax:
+Here is the same problem in Why3 syntax:
 
 ```{.tip-include .why3}
 list.smt2
@@ -135,6 +151,14 @@ type are constructed with `lambda ((x a) (y b)) ...`, and for the second with
 use the `@` function, which also come at a family of types:
 `((=> a b) a) b`, `((=> a b c) a b) c`, and so on.
 
+Partial application is not supported, i.e. if you have a function `f`
+with type `(=> int int int)`, the application `(f 1)` is invalid, and should
+be written with an explicit lambda: `(lambda ((x int)) (f 1 x))`. The reason
+why this is important is because SMT LIB supports polyvariadic functions,
+like `and`, and `+`. For example, if (implicit) partial application was allowed,
+the expression `(+ 1 2)` could mean `3` or `(lambda ((x int)) (+ 1 2 x))`,
+or a function with higher arity.
+
 In some cases, higher order functions can be removed with specialisation, 
 like in the example above. They can always be removed by defunctionalisation,
 which is implemented in our tool chain. This pass transforms the above program into this:
@@ -147,11 +171,8 @@ Here, `=>` with one argument is replaced with `fun1`, `@` with one argument
 is replaced with `apply1`. The lambda in the property has become a new function,
 `lam`, which closes over the free variables `f` and `g`.
 
-HO-function (with a closure)
+## TODO
 
-default
+mutual recusion (over data types, over functions)
 
-mutual recusion
-
-partial branches
-
+partial branches/partiality
