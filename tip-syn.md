@@ -176,3 +176,5 @@ is replaced with `apply1`. The lambda in the property has become a new function,
 mutual recusion (over data types, over functions)
 
 partial branches/partiality
+
+## References

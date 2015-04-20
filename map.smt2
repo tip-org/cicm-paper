@@ -7,7 +7,7 @@
      (case (cons y ys) (cons (@ f y) (as (map2 f ys) (list b)))))))
 (assert-not
   (par (a b c)
-    (forall ((f (=> a b)) (g (=> c a)) (xs (list c)))
-      (= (map2 (lambda ((x c)) (@ f (@ g x))) xs)
+    (forall ((f (=> b c)) (g (=> a b)) (xs (list a)))
+      (= (map2 (lambda ((x a)) (@ f (@ g x))) xs)
         (map2 f (map2 g xs))))))
 (check-sat)
