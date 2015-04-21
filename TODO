@@ -1,0 +1,35 @@
+
+Entire article:
+
+    Grep for Why{3,ML} and fix
+
+Current Section 1, Introduction:
+
+    [Koen] Reword the motivation
+
+Current Section 2, The Benchmark Format:
+
+    [Nick] Fix the Benchmark format text
+
+    [Dan & Nick] Finish the syntax document and link to it
+
+Current Section 3, Sample Benchmarks:
+
+    [Dan&volunteers] Add more benchmarks&update text accordingly
+        * Koen's crazy examples
+        * Dan's crazy examples
+        * IWC
+            http://cgi.csc.liv.ac.uk/~lad/research/challenges/
+        * HOL Light distribution (??): Ask Magnus Myreen
+
+    Change X to the actual number of benchmarks
+
+
+Current Section 4, Contribute to TIP:
+
+    [Dan] Describe the current tools
+
+Current Section 5, Further Work:
+
+    [Koen] Add some text about how to harvest for new problems
+
