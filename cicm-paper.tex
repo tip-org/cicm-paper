@@ -106,41 +106,40 @@ This subset represent a basic functional programming language and is sufficientl
 
 \subsection*{Example}
 As an example of what the benchmarks look like, consider \texttt{prop12} from the IsaPlanner benchmark set (see \ref{sec:isap} below), which states that the functions \texttt{drop} and \texttt{map} distribute over one another: \begin{center} \texttt{drop n (map f xs) = map f (drop n xs)}.\end{center}
-Each benchmark lives in a dummy module of its own (here called '\texttt{A}'). As \texttt{map} is a higher-order function, we import the \texttt{HighOrd} module, which is built into Why3. We also declare two simple algebraic datatypes representing natural numbers and polymorphic lists.
+We declare two simple algebraic datatypes representing natural numbers and polymorphic lists.
 
 \begin{code}
-module A
-  use HighOrd
-  type nat = Z | S nat
-  type list 'a = Nil | Cons 'a (list 'a)
+(declare-datatypes (a)
+  ((list (nil) (cons (head a) (tail (list a))))))
+(declare-datatypes () ((Nat (Z) (S (p Nat)))))
 \end{code}
 
-Next, we declare two recursive functions: \texttt{drop}, which recursively drops a given number of elements from the front of the list and \texttt{map}, which is a higher-order function applying the given function \texttt{f} to each element of a list.
+Next, we declare two recursive functions: \texttt{drop}, which recursively drops a given number of elements from the front of the list and \texttt{map}, which is a higher-order function applying the given unary function \texttt{f} to each element of a list.
 
 \begin{code}
-function drop (n : nat) (xs : list 'a) : list 'a =
-match n with
-	| Z -> xs
-	| S m ->
-		match xs with
-		| Nil -> (Nil : list 'a)
-		| Cons y ys -> drop m ys
-	end
-end
-
-function map (f : ('a -> 'b)) (ds : list 'a) : list 'b =
-match ds with
-	| Nil -> (Nil : list 'b)
-	| Cons x xs -> Cons (f x) (map f xs)
-end
+(define-funs-rec
+  ((par (a b) (map ((f (=> a b)) (xs (list a))) (list b))))
+  ((match xs
+     (case nil (as nil (list b)))
+     (case (cons y ys) (cons (@ f y) (map f ys))))))
+(define-funs-rec
+  ((par (a) (drop ((n Nat) (xs (list a))) (list a))))
+  ((match n
+     (case Z xs)
+     (case (S m)
+       (match xs
+         (case nil xs)
+         (case (cons y ys) (drop m ys)))))))
 \end{code}
 
-Finally, the benchmark problem itself is declared with the keyword \texttt{goal} and given the name \texttt{prop\_12}:
+Finally, the benchmark problem itself is declared with the keyword \texttt{assort-not}:
 
 \begin{code}
-goal prop_12 :
-  forall n : nat, f : ('a -> 'b), xs : list 'a .
-  drop n (map f xs) = map f (drop n xs)
+(assert-not
+  (par (a b)
+    (forall ((n Nat) (f (=> a b)) (xs (list a)))
+      (= (drop n (map f xs)) (map f (drop n xs))))))
+(check-sat)
 \end{code}
 Each benchmark file is stand-alone and only contains one property.
 
@@ -163,7 +162,7 @@ implementation of integers on top of natural numbers, problems about natural num
 \section{Contribute to TIP}
 We invite the theorem proving community to contribute additional inductive benchmarks and challenge problems to TIP. Instructions for how to submit new problems can be found in the TIP repository README file (see \url{https://github.com/tip-org/benchmarks}).
 
-For automated translation between Haskell and WhyML, HipSpec provides some useful tools which can be found at \url{https://github.com/danr/hipspec/tree/print-why3}.
+For automated translation from Haskell to out SMT-LIB format, and to a simplified version of it and to Why3, we provide some useful tools which can be found at \url{https://github.com/tip-org/tools}.
 
 \section{Conclusion and Further Work}
 TIP is intended to be a standard benchmark suite for developers and users of inductive theorem provers. We hope that this initiative will ease comparison and evaluation of systems and spur further collaboration and development by attracting submissions of additional challenge problems from the community.
