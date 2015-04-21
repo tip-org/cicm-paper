@@ -59,37 +59,37 @@ Dafny/Z3 and CVC4. To ease evaluation and comparison between systems,
 good benchmarks are important. However, there has not been a shared
 standard benchmark suite for inductive theorem provers. This paper
 describes initial efforts to collect benchmarks for inductive theorem
-provers which can be shared among developers and users. 
+provers which can be shared among developers and users.
 We expect this benchmark suite to continuously grow as
 more problems are submitted by the community. New challenge problems
 will promote new developments of provers which will greatly benefit
-both developers and users of inductive theorem provers. 
+both developers and users of inductive theorem provers.
 
 \end{abstract}
 
 \section{Introduction}
 
-We have recently seen increased interest in inductive theorem proving, both with specialised provers such as IsaPlanner, Zeno and HipSpec \cite{dixon2007isaplanner,zeno,hipspecCADE}, SMT-solvers such as Dafny/Z3 and CVC4 \cite{dafny,cvc4}, recent work on the first-order SPASS prover \cite{SPASSInduction}, as well as some support in proof assistants \cite{acl2,hipster}. 
+We have recently seen increased interest in inductive theorem proving, both with specialised provers such as IsaPlanner, Zeno and HipSpec \cite{dixon2007isaplanner,zeno,hipspecCADE}, SMT-solvers such as Dafny/Z3 and CVC4 \cite{dafny,cvc4}, recent work on the first-order SPASS prover \cite{SPASSInduction}, as well as some support in proof assistants \cite{acl2,hipster}.
 
-To ease evaluation and development, and compare the relative strengths of the different systems, it is important to have good standard benchmarks. The contribution of this paper is an accessible standard benchmark suite for inductive theorem provers which can be extended by users and developers. The benchmarks are publicly available at: 
+To ease evaluation and development, and compare the relative strengths of the different systems, it is important to have good standard benchmarks. The contribution of this paper is an accessible standard benchmark suite for inductive theorem provers which can be extended by users and developers. The benchmarks are publicly available at:
 \begin{center}
 \url{https://github.com/tip-org/benchmarks}
 \end{center}
-We have so far collected 197 problems in the TIP benchmark suite. We invite the community to submit additional problems and challenges and expect the collection to continuously grow, and provide new challenges for developers. 
+We have so far collected 197 problems in the TIP benchmark suite. We invite the community to submit additional problems and challenges and expect the collection to continuously grow, and provide new challenges for developers.
 
-We do not yet discuss any special-purpose language features for expressing inductive problems in general. The benchmarks are therefore currently expressed in a subset of the WhyML specification language from the Why3 program verification system \cite{boogie11why3,Why3}. We have chosen this format as the Why3 system already provides translation tools from WhyML to various other common formats, such as SMT-LIB and versions of TPTP. 
-In addition, the WhyML language is easy to read also for humans. The Why3 system relies on external provers to discharge proof obligations and is already connected to a wide variety of automated and interactive provers, including  Alt-Ergo, CVC3, Z3, E, SPASS, Vampire, Coq and PVS. We hope that the new benchmark suite will encourage the connection of automated inductive theorem provers to Why3. 
+We do not yet discuss any special-purpose language features for expressing inductive problems in general. The benchmarks are therefore currently expressed in a subset of the WhyML specification language from the Why3 program verification system \cite{boogie11why3,Why3}. We have chosen this format as the Why3 system already provides translation tools from WhyML to various other common formats, such as SMT-LIB and versions of TPTP.
+In addition, the WhyML language is easy to read also for humans. The Why3 system relies on external provers to discharge proof obligations and is already connected to a wide variety of automated and interactive provers, including  Alt-Ergo, CVC3, Z3, E, SPASS, Vampire, Coq and PVS. We hope that the new benchmark suite will encourage the connection of automated inductive theorem provers to Why3.
 
 \section{The Benchmark Format}
 \label{sec:format}
 The basic WhyML language is an extension of first-order logic also featuring e.g. polymorphic types, algebraic datatypes and recursive function definitions over algebraic types. Why3 requires functions to be provably terminating. Recently, WhyML has also been extended with higher-order functions and lambda abstractions \cite{HOWhyML}. For the full definition of the WhyML language we refer to the Why3 webpage: \url{http://why3.lri.fr/}. For the purpose of the TIP benchmark suite we currently support a subset of WhyML summarised below:
 \begin{itemize}
-\item \textbf{Declarations:} 
+\item \textbf{Declarations:}
 	\begin{itemize}
 	\item (polymorphic) algebraic datatype declarations
 	\item (polymorphic) recursive function definitions
 	\end{itemize}
-\item \textbf{Expressions:} 
+\item \textbf{Expressions:}
 	\begin{itemize}
 	\item variables
 	\item function application
@@ -101,8 +101,8 @@ The basic WhyML language is an extension of first-order logic also featuring e.g
 %	\begin{itemize}
 %	\item function arrows
 %	\end{itemize}
-\end{itemize}	
-This subset represent a basic functional programming language and is sufficiently to expressive for our current set of standard benchmarks. Further extensions of the supported subset are likely. 
+\end{itemize}
+This subset represent a basic functional programming language and is sufficiently to expressive for our current set of standard benchmarks. Further extensions of the supported subset are likely.
 
 \subsection*{Example}
 As an example of what the benchmarks look like, consider \texttt{prop12} from the IsaPlanner benchmark set (see \ref{sec:isap} below), which states that the functions \texttt{drop} and \texttt{map} distribute over one another: \begin{center} \texttt{drop n (map f xs) = map f (drop n xs)}.\end{center}
@@ -142,7 +142,7 @@ goal prop_12 :
   forall n : nat, f : ('a -> 'b), xs : list 'a .
   drop n (map f xs) = map f (drop n xs)
 \end{code}
-Each benchmark file is stand-alone and only contains one property. 
+Each benchmark file is stand-alone and only contains one property.
 
 \section{Sample Benchmarks}
 In this section we give a short overview of  some the problems currently available in the repository. We expect more to be added.
@@ -152,7 +152,7 @@ In this section we give a short overview of  some the problems currently availab
 This set of 85 problems comes from the evaluation of IsaPlanner's rippling-heuristic for guiding rewriting in inductive proofs in the context of functions with case- and if-statements \cite{IsaPcase}. It has been used in the evaluation of many of the recent inductive theorem provers and includes theorems about lists, natural numbers and binary trees. The proofs are relatively easy, most of the theorems can be proved by structural induction using only the function definitions and only 15 require auxiliary lemmas to be discovered.
 
 \subsection{Productive Use of Failure Benchmarks}
-This is another benchmark suite which has been used to evaluate several recent provers. It consists of 50 theorems about lists and natural numbers and originates from evaluation of techniques for discovering auxiliary lemmas in the CLAM prover \cite{productiveuse}. The original paper did not provide definitions for the functions used in the benchmarks, so the definitions provided here come from the evaluation of the HipSpec system \cite{hipspecCADE}. These proofs are generally a bit harder, and may require additional lemmas to be found and proved (by another induction) or generalisation of the conjecture in order to strengthen the inductive hypothesis. 
+This is another benchmark suite which has been used to evaluate several recent provers. It consists of 50 theorems about lists and natural numbers and originates from evaluation of techniques for discovering auxiliary lemmas in the CLAM prover \cite{productiveuse}. The original paper did not provide definitions for the functions used in the benchmarks, so the definitions provided here come from the evaluation of the HipSpec system \cite{hipspecCADE}. These proofs are generally a bit harder, and may require additional lemmas to be found and proved (by another induction) or generalisation of the conjecture in order to strengthen the inductive hypothesis.
 
 \subsection{New TIP Benchmarks}
 This set contains 63 new benchmarks including, amongst others,
@@ -166,14 +166,14 @@ We invite the theorem proving community to contribute additional inductive bench
 For automated translation between Haskell and WhyML, HipSpec provides some useful tools which can be found at \url{https://github.com/danr/hipspec/tree/print-why3}.
 
 \section{Conclusion and Further Work}
-TIP is intended to be a standard benchmark suite for developers and users of inductive theorem provers. We hope that this initiative will ease comparison and evaluation of systems and spur further collaboration and development by attracting submissions of additional challenge problems from the community. 
+TIP is intended to be a standard benchmark suite for developers and users of inductive theorem provers. We hope that this initiative will ease comparison and evaluation of systems and spur further collaboration and development by attracting submissions of additional challenge problems from the community.
 
 In addition to serving as a standard benchmark suite for inductive provers, the TIP benchmarks may also be useful for developers of theory exploration systems. Theory exploration is a technique for automatically discovering interesting conjectures about a given set of functions and datatypes, and is used in for example the HipSpec prover to discover lemmas. The TIP benchmarks can be compared to the output from the theory explorer in precision/recall analysis to assess the quality and interestingness of the conjectures generated. A good theory exploration system may also be used to generate new benchmarks for TIP.
 
-The TIP benchmarks are currently expressed in a subset of WhyML. If we want to use the Why3 translation tools to other formats, there are some restrictions. Functions are for instance required to be provably terminating by the Why3 termination checker, which might not always be the case (e.g. it fails to prove termination for many functions that are not structurally recursive).  
+The TIP benchmarks are currently expressed in a subset of WhyML. If we want to use the Why3 translation tools to other formats, there are some restrictions. Functions are for instance required to be provably terminating by the Why3 termination checker, which might not always be the case (e.g. it fails to prove termination for many functions that are not structurally recursive).
 In the future, we therefore expect to support a richer language, and will provide tools to help developers use the TIP format.
 We may also want to include problems about lazy functions and will then need to extend the format to also allow non-terminating functions.
-%We may in the future perhaps also want to include problems featuring functions in a programming language with lazy evaluation. 
+%We may in the future perhaps also want to include problems featuring functions in a programming language with lazy evaluation.
 Another extension is to also allow non-theorems among the benchmarks, for evaluation of tools for counter-example finding.  We see this paper as a starting point to encourage further discussion in the inductive theorem proving community about what future format(s) for inductive problems should look like.
 
 
