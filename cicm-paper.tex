@@ -160,9 +160,18 @@ library\footnote{\url{https://github.com/agda/agda-stdlib}}
 implementation of integers on top of natural numbers, problems about natural numbers in binary representation, problems about regular expressions, binary search trees, grammars and skew heaps. The problems about regular expressions, grammars and heaps have to our knowledge not been fully automated yet and are offered as challenges!
 
 \section{Contribute to TIP}
-We invite the theorem proving community to contribute additional inductive benchmarks and challenge problems to TIP. Instructions for how to submit new problems can be found in the TIP repository README file (see \url{https://github.com/tip-org/benchmarks}).
+We invite the theorem proving community to contribute additional inductive
+benchmarks and challenge problems to TIP. Instructions for how to submit
+problems can be found in the README file for the repository
+(\url{https://github.com/tip-org/benchmarks}.)
 
-For automated translation from Haskell to out SMT-LIB format, and to a simplified version of it and to Why3, we provide some useful tools which can be found at \url{https://github.com/tip-org/tools}.
+We are developing a toolchain for translating to and from our format.  The
+development is in an own repository (\url{https://github.com/tip-org/tools}.)
+The current frontends are the format itself, and Haskell.  We can output a
+simplified SMT-LIB version without our extensions (up to polymorphism, though a
+monomorphiser is planned), as well as WhyML\cite{Why3} (which in turn can be
+translated into many other formats using the Why3 tool.) We encourage the community
+to request and contribute additional input and output formats to our toolchain.
 
 \section{Conclusion and Further Work}
 TIP is intended to be a standard benchmark suite for developers and users of inductive theorem provers. We hope that this initiative will ease comparison and evaluation of systems and spur further collaboration and development by attracting submissions of additional challenge problems from the community.
