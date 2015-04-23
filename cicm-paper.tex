@@ -77,32 +77,46 @@ To ease evaluation and development, and compare the relative strengths of the di
 \end{center}
 We have so far collected 197 problems in the TIP benchmark suite. We invite the community to submit additional problems and challenges and expect the collection to continuously grow, and provide new challenges for developers.
 
-We do not yet discuss any special-purpose language features for expressing inductive problems in general. The benchmarks are therefore currently expressed in a subset of the WhyML specification language from the Why3 program verification system \cite{boogie11why3,Why3}. We have chosen this format as the Why3 system already provides translation tools from WhyML to various other common formats, such as SMT-LIB and versions of TPTP.
-In addition, the WhyML language is easy to read also for humans. The Why3 system relies on external provers to discharge proof obligations and is already connected to a wide variety of automated and interactive provers, including  Alt-Ergo, CVC3, Z3, E, SPASS, Vampire, Coq and PVS. We hope that the new benchmark suite will encourage the connection of automated inductive theorem provers to Why3.
+%% We do not yet discuss any special-purpose language features for expressing inductive problems in general. The benchmarks are therefore currently expressed in a subset of the WhyML specification language from the Why3 program verification system \cite{boogie11why3,Why3}. We have chosen this format as the Why3 system already provides translation tools from WhyML to various other common formats, such as SMT-LIB and versions of TPTP.
+%% In addition, the WhyML language is easy to read also for humans. The Why3 system relies on external provers to discharge proof obligations and is already connected to a wide variety of automated and interactive provers, including  Alt-Ergo, CVC3, Z3, E, SPASS, Vampire, Coq and PVS. We hope that the new benchmark suite will encourage the connection of automated inductive theorem provers to Why3.
 
 \section{The Benchmark Format}
 \label{sec:format}
-The basic WhyML language is an extension of first-order logic also featuring e.g. polymorphic types, algebraic datatypes and recursive function definitions over algebraic types. Why3 requires functions to be provably terminating. Recently, WhyML has also been extended with higher-order functions and lambda abstractions \cite{HOWhyML}. For the full definition of the WhyML language we refer to the Why3 webpage: \url{http://why3.lri.fr/}. For the purpose of the TIP benchmark suite we currently support a subset of WhyML summarised below:
+Our benchmarks are expressed in an extension of the SMT-LIB format
+\cite{BST10}. We extend the format so that it can express inductive
+problems natively; using encodings throws away metainformation that
+can be useful to tools. Wherever possible, we use existing extensions
+instead of designing our own. We use the following existing extensions:
 \begin{itemize}
-\item \textbf{Declarations:}
-	\begin{itemize}
-	\item (polymorphic) algebraic datatype declarations
-	\item (polymorphic) recursive function definitions
-	\end{itemize}
-\item \textbf{Expressions:}
-	\begin{itemize}
-	\item variables
-	\item function application
-	\item match (case) expressions
-	\item lambda abstraction
-	%\item let-expressions (non-recursive, non-polymorphic)
-	\end{itemize}
-%\item \textbf{Types:}
-%	\begin{itemize}
-%	\item function arrows
-%	\end{itemize}
+\item The \verb|declare-datatypes| syntax for declaring algebraic
+  datatypes, which is supported in Z3 and CVC4.
+\item The \verb|defines-funs-rec| syntax for recursive function
+  definitions, which is implemented in CVC4 and proposed for
+  SMT-LIB 2.5 \cite{BST10}.
+\item The \verb|par| syntax for polymorphism \cite{cvc4parPR}, which
+  is implemented in a version of CVC4.
 \end{itemize}
-This subset represent a basic functional programming language and is sufficiently to expressive for our current set of standard benchmarks. Further extensions of the supported subset are likely.
+
+We also add some extensions of our own, which are described fully in
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX:
+\begin{itemize}
+\item Pattern matching on algebraic datatypes, where traditional
+  SMT-LIB requires use of functions like \verb|head| and \verb|tail|.
+\item Higher-order functions and lambda functions.
+\item A syntactic construct \verb|(assert-not p)| which is
+  semantically equivalent to \verb|(assert (not p))| but is intended
+  to mark \verb|p| as the goal to prove. (Inductive theorem provers
+  often work on a distinguished goal, unlike first-order provers.)
+\end{itemize}
+
+To encourage uptake of the format, we have written a tool which can
+currently:
+\begin{itemize}
+\item translate away our own extensions to SMT-LIB, yielding a problem
+  which can be read by CVC4,
+\item translate a TIP problem to Why3, and
+\item translate Haskell programs to TIP.
+\end{itemize}
 
 \subsection*{Example}
 As an example of what the benchmarks look like, consider \texttt{prop12} from the IsaPlanner benchmark set (see \ref{sec:isap} below), which states that the functions \texttt{drop} and \texttt{map} distribute over one another: \begin{center} \texttt{drop n (map f xs) = map f (drop n xs)}.\end{center}
@@ -132,7 +146,7 @@ Next, we declare two recursive functions: \texttt{drop}, which recursively drops
          (case (cons y ys) (drop m ys)))))))
 \end{code}
 
-Finally, the benchmark problem itself is declared with the keyword \texttt{assort-not}:
+Finally, the benchmark problem itself is declared with the keyword \texttt{assert-not}:
 
 \begin{code}
 (assert-not

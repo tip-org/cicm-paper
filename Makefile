@@ -4,5 +4,5 @@ cicm-paper.pdf : cicm-paper.tex cicm-paper.bbl
 cicm-paper.aux : cicm-paper.tex
 	pdflatex cicm-paper.tex
 
-cicm-paper.bbl : cicm-paper.aux cicm-paper.bib
+cicm-paper.bbl : cicm-paper.aux bibfile.bib
 	bibtex cicm-paper
