@@ -12,8 +12,8 @@ When designing our language extensions, we had these criteria in mind:
 
 1. The problem format should not look like an encoding: features such as
    data types and pattern matching should be supported natively rather
-   than encoded. We should not have to throw away any information that might
-   be useful to the prover when translating a functional program to TIP.
+   than encoded. We should preserve as much information as possible from
+   the input problem in case it's useful to a prover.
 2. As far as possible, the syntax should be compatible with SMT-LIB.
    So we do not introduce new features just for the sake of it.
    We are however incompatible with SMT-LIB whenever it's needed to avoid

@@ -82,53 +82,45 @@ We have so far collected 197 problems in the TIP benchmark suite. We invite the 
 
 \section{The Benchmark Format}
 \label{sec:format}
-Our benchmark problems use several features that are unusual in
-combination: algebraic datatypes, higher-order functions and
-non-structural recursion. No existing format that we know of supports
-all three. XXXXX isabelle? We therefore designed our own format, which
-is an extension of SMT-LIB \cite{BST10}.
-
-We start with SMT-LIB plus the following well-known extensions:
+The benchmarks are expressed in a variant of SMT-LIB \cite{BST10},
+extended with support for algebraic datatypes and higher-order
+functions. The format is described in detail in \cite{tiplang}.
+Starting from the basic SMT-LIB format, we import the following
+features from existing systems:
 \begin{itemize}
-\item The \verb|declare-datatypes| syntax for declaring algebraic
-  datatypes, which is supported in Z3 and CVC4.
-\item The \verb|defines-funs-rec| syntax for recursive function
-  definitions, which is implemented in CVC4 and proposed for
+\item Algebraic datatypes, which are declared using the
+  \verb|declare-datatypes| syntax as supported in Z3 and CVC4.
+\item Recursive function definitions, which use the
+  \verb|define-funs-rec| syntax implemented in CVC4 and proposed for
   SMT-LIB 2.5 \cite{BST10}.
-\item The \verb|par| syntax for polymorphism \cite{cvc4parPR}, which
-  is implemented in a version of CVC4.
+\item Polymorphic functions, using the proposed \verb|par| syntax
+  \cite{cvc4parPR}, which is implemented in a version of CVC4.
 \end{itemize}
 
-We also add some extensions of our own, which are described fully in
-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX:
+We then add more features of our own, which are specific to TIP:
+\cite{tiplang}:
 \begin{itemize}
-\item Pattern matching on algebraic datatypes
-  (\verb|declare-datatypes| instead requires the use of projection
-  functions like \verb|head| and \verb|tail|).
-\item Higher-order functions and lambda functions.
-\item A syntactic construct \verb|(assert-not p)| which is
-  semantically equivalent to \verb|(assert (not p))| but hints that
-  \verb|p| is the goal to prove.
+\item In the standard \verb|declare-datatypes| syntax, functions over
+  algebraic datatypes are defined using projection functions like
+  \verb|head| and \verb|tail|. We add a pattern-matching syntax,
+  which is more convenient for many provers.
+\item Many of our benchmark problems use higher-order functions,
+  such as \verb|map|. We add syntax for lambda functions and
+  higher-order functions.
+\item Many inductive provers treat the goal specially, as opposed to
+  SMT-LIB which expresses the goal as a negated axiom. We add a
+  construct \verb|(assert-not p)| which declares \verb|p| as the goal;
+  it is semantically equivalent to \verb|(assert (not p))|.
 \end{itemize}
 
-While it would be possible to encode these extensions using existing
-SMT-LIB features, doing so would throw away metainformation that is
-useful to tools. For example, many inductive theorem provers work on a
-distinguished goal, and \verb|assert-not| provides a useful hint to
-such tools.
-
-However, not every prover will support every feature of TIP. To lower
-the barrier to entry for using TIP, we are writing a tool which can
-transform a TIP problem in various ways. To date it can:
-\begin{itemize}
-\item translate away our own extensions to SMT-LIB, yielding a problem
-  which can be read by CVC4,
-\item translate a TIP problem to Why3, and
-\item translate Haskell programs to TIP.
-\end{itemize}
-We intend to extend this tool to support a wide variety of input and
-output formats as well as a wide variety of transformations for tools
-which do not want to support the full TIP format.
+We do not necessarily expect every prover to support TIP natively.
+Instead, we are working on a tool which can translate TIP problems to
+and from a variety of other formats. Currently our tool can translate
+TIP problems to CVC4-compatible SMT-LIB or to Why3, and can compile
+Haskell programs into TIP properties. It can also perform a number
+of transformations for tools which do not support the full TIP
+language, such as removing higher-order functions by
+defunctionalisation \cite{defunc}.
 
 \subsection*{Example}
 As an example of what the benchmarks look like, consider \texttt{prop12} from the IsaPlanner benchmark set (see Section~\ref{sec:isap} below), which states that the functions \texttt{drop} and \texttt{map} distribute over one another: \begin{center} \texttt{drop n (map f xs) = map f (drop n xs)}.\end{center}
