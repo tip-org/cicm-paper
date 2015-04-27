@@ -98,7 +98,6 @@ features from existing systems:
 \end{itemize}
 
 We then add more features of our own, which are specific to TIP:
-\cite{tiplang}:
 \begin{itemize}
 \item In the standard \verb|declare-datatypes| syntax, functions over
   algebraic datatypes are defined using projection functions like
@@ -116,10 +115,10 @@ We then add more features of our own, which are specific to TIP:
 We do not necessarily expect every prover to support TIP natively.
 Instead, we are working on a tool which can translate TIP problems to
 and from a variety of other formats. Currently our tool can translate
-TIP problems to CVC4-compatible SMT-LIB or to Why3, and can compile
-Haskell programs into TIP properties. It can also perform a number
-of transformations for tools which do not support the full TIP
-language, such as removing higher-order functions by
+TIP problems to a CVC4-compatible version of SMT-LIB or to WhyML, and
+can compile Haskell programs into TIP properties. It can also perform
+a number of transformations for tools which do not support the full
+TIP language, such as removing higher-order functions by
 defunctionalisation \cite{defunc}.
 
 \subsection*{Example}
@@ -183,13 +182,19 @@ benchmarks and challenge problems to TIP. Instructions for how to submit
 problems can be found in the README file for the repository
 (\url{https://github.com/tip-org/benchmarks}.)
 
-We are developing a toolchain for translating to and from our format.  The
-development is in an own repository (\url{https://github.com/tip-org/tools}.)
-The current frontends are the format itself, and Haskell.  We can output a
-simplified SMT-LIB version without our extensions (up to polymorphism, though a
-monomorphiser is planned), as well as WhyML\cite{Why3} (which in turn can be
-translated into many other formats using the Why3 tool.) We encourage the community
-to request and contribute additional input and output formats to our toolchain.
+We are developing a toolchain for translating to and from our format. The
+development is in its own repository
+(\url{https://github.com/tip-org/tools}).
+The tool can currently read in problems in TIP format or Haskell, and
+output TIP, SMT-LIB and WhyML, with some caveats:
+\begin{itemize}
+  \item The generated SMT-LIB uses \verb|declare-datatypes|,
+    \verb|define-funs-rec| and polymorphism.
+  \item The generated WhyML makes no special effort to pass Why3's
+    termination checker.
+\end{itemize}
+We encourage the community to request and contribute additional input
+and output formats to our toolchain.
 
 \section{Conclusion and Further Work}
 TIP is intended to be a standard benchmark suite for developers and users of inductive theorem provers. We hope that this initiative will ease comparison and evaluation of systems and spur further collaboration and development by attracting submissions of additional challenge problems from the community.
