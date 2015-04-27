@@ -204,9 +204,16 @@ TIP is intended to be a standard benchmark suite for developers and users of ind
 
 In addition to serving as a standard benchmark suite for inductive provers, the TIP benchmarks may also be useful for developers of theory exploration systems. Theory exploration is a technique for automatically discovering interesting conjectures about a given set of functions and datatypes, and is used in for example the HipSpec prover to discover lemmas. The TIP benchmarks can be compared to the output from the theory explorer in precision/recall analysis to assess the quality and interestingness of the conjectures generated. A good theory exploration system may also be used to generate new benchmarks for TIP.
 
-The TIP benchmarks are currently expressed in a subset of WhyML. If we want to use the Why3 translation tools to other formats, there are some restrictions. Functions are, for instance, required to be provably terminating by the Why3 termination checker, which might not always be the case (e.g., it fails to prove termination for many functions that are not structurally recursive).
-In the future, we therefore expect to support a richer language, and will provide tools to help developers use the TIP format.
-We may also want to include problems about lazy functions and will then need to extend the format to also allow non-terminating functions.
+It is important to have good tool support if TIP is to be used by the
+community. We plan to develop our tool further to support more input
+and output formats, as well as various strategies for encoding
+features of TIP for provers that do not support the full language.
+
+%The TIP benchmarks are currently expressed in a subset of WhyML. If we want to use the Why3 translation tools to other formats, there are some restrictions. Functions are, for instance, required to be provably terminating by the Why3 termination checker, which might not always be the case (e.g., it fails to prove termination for many functions that are not structurally recursive).
+%In the future, we therefore expect to support a richer language, and will provide tools to help developers use the TIP format.
+In the future, we may want to extend the language to support a richer
+variety of problems. For example,
+we may want to include problems about lazy functions and will then need to extend the format to allow non-terminating functions.
 %We may in the future perhaps also want to include problems featuring functions in a programming language with lazy evaluation.
 Another extension is to also allow non-theorems among the benchmarks, for evaluation of tools for counter-example finding.  We see this paper as a starting point to encourage further discussion in the inductive theorem proving community about what future format(s) for inductive problems should look like.
 
