@@ -122,7 +122,7 @@ TIP language, such as removing higher-order functions by
 defunctionalisation \cite{defunc}.
 
 \subsection*{Example}
-As an example of what the benchmarks look like, consider \texttt{prop12} from the IsaPlanner benchmark set (see Section~\ref{sec:isap} below), which states that the functions \texttt{drop} and \texttt{map} distribute over one another: \begin{center} \texttt{drop n (map f xs) = map f (drop n xs)}.\end{center}
+As an example of what the benchmarks look like, we show \texttt{prop12} from the IsaPlanner benchmark set (see Section~\ref{sec:isap} below), which states that the functions \texttt{drop} and \texttt{map} distribute over one another: \begin{center} \texttt{drop n (map f xs) = map f (drop n xs)}.\end{center}
 We declare two simple algebraic datatypes representing natural numbers and polymorphic lists.
 
 \begin{code}
@@ -148,6 +148,15 @@ Next, we declare two recursive functions: \texttt{drop}, which recursively drops
          (case nil xs)
          (case (cons y ys) (drop m ys)))))))
 \end{code}
+
+The definition illustrates several features of TIP:
+\begin{itemize}
+  \item Polymorphism: \verb|par| introduces type variables.
+  \item Higher-order functions: \verb|(=> a b)| is the type of
+    functions from \verb|a| to \verb|b|, while \verb|@| applies
+    a first-class function to its argument.
+  \item Pattern-matching.
+\end{itemize}
 
 Finally, the benchmark problem itself is declared with the keyword \texttt{assert-not}:
 
