@@ -83,11 +83,11 @@ benchmarks are publicly available at:
 \begin{center}
 \url{https://github.com/tip-org/benchmarks}
 \end{center}
-We have so far collected 205 problems in our benchmark suite, 
-which we have called ``TIP'', for Tons of Inductive Problems -- 
-so named in the hope of attracting many more problems! We invite 
-the community to submit additional problems and challenges and 
-expect the collection to continuously grow and provide new 
+We have so far collected 340 problems in our benchmark suite,
+which we have called ``TIP'', for Tons of Inductive Problems --
+so named in the hope of attracting many more problems! We invite
+the community to submit additional problems and challenges and
+expect the collection to continuously grow and provide new
 challenges for developers.
 
 %% We do not yet discuss any special-purpose language features for expressing inductive problems in general. The benchmarks are therefore currently expressed in a subset of the WhyML specification language from the Why3 program verification system \cite{boogie11why3,Why3}. We have chosen this format as the Why3 system already provides translation tools from WhyML to various other common formats, such as SMT-LIB and versions of TPTP.
@@ -206,7 +206,7 @@ This set of 85 problems comes from the evaluation of IsaPlanner's rippling-heuri
 This is another benchmark suite which has been used to evaluate several recent provers. It consists of 50 theorems about lists and natural numbers and originates from evaluation of techniques for discovering auxiliary lemmas in the CLAM prover \cite{productiveuse}. The original paper did not provide definitions for the functions used in the benchmarks, so the definitions provided here come from the evaluation of the HipSpec system \cite{hipspecCADE}. These proofs are generally a bit harder, and may require additional lemmas to be found and proved (by another induction) or generalisation of the conjecture in order to strengthen the inductive hypothesis.
 
 \subsection{New TIP Benchmarks}
-This set contains 70 new benchmarks including, amongst others,
+This set contains 205 new benchmarks including, amongst others,
 properties of the Agda standard
 library\footnote{\url{https://github.com/agda/agda-stdlib}}
 implementation of integers on top of natural numbers, problems about natural numbers in binary representation, various sorting functions with correctness properties expressed in alternative ways, problems about regular expressions, binary search trees, grammars and skew heaps. The problems about sorting, regular expressions, grammars and heaps have to our knowledge not all been fully automated yet and are offered as challenges!
