@@ -123,14 +123,16 @@ We then add more features of our own, which are specific to TIP:
   it is semantically equivalent to \verb|(assert (not p))|.
 \end{itemize}
 
-We do not necessarily expect every prover to support TIP natively.
-Instead, we are working on a tool which can translate TIP problems to
-and from a variety of other formats. Currently our tool can translate
-TIP problems to a CVC4-compatible version of SMT-LIB or to WhyML, and
-can compile Haskell programs into TIP properties. It can also perform
-a number of transformations for tools which do not support the full
-TIP language, such as removing higher-order functions by
-defunctionalisation \cite{defunc}.
+We do not necessarily expect every prover to support TIP 
+natively. Instead, we have made a tool which can translate 
+TIP problems to and from a variety of other formats. Currently 
+our tool can translate TIP problems to a CVC4-compatible version 
+of SMT-LIB or to WhyML, and can compile Haskell programs into 
+TIP properties. It can also perform a number of transformations 
+for tools which do not support the full TIP language, such as 
+removing higher-order functions by defunctionalisation 
+\cite{defunc}. Our aim is to support many different source and
+target formats in this tool.
 
 \subsection*{Example}
 As an example of what the benchmarks look like, we show \texttt{prop12} from the IsaPlanner benchmark set (see Section~\ref{sec:isap} below), which states that the functions \texttt{drop} and \texttt{map} distribute over one another: \begin{center} \texttt{drop n (map f xs) = map f (drop n xs)}.\end{center}
