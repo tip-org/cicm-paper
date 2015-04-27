@@ -51,31 +51,42 @@
 
 \maketitle
 
-\begin{abstract}
-This paper describes initial efforts to collect benchmarks for 
-inductive theorem provers which can be shared among developers 
-and users. The recent increase of interest in automated 
-inductive theorem proving (in special-purpose provers such 
-as IsaPlanner, Zeno and HipSpec, in SMT-solvers such as CVC4, 
-and in auto-active provers like Dafny) has also increased the 
-demands for evaluation and comparison between these systems. Our 
-benchmark suite aims to become the standard shared benchmark 
-suite for inductive theorem provers. We expect the benchmark 
-suite to continuously grow as more problems are submitted by the 
-community. New challenge problems will promote new developments 
-of provers which will greatly benefit both developers and users 
-of inductive theorem provers.
+\begin{abstract} This paper describes our initial efforts to 
+collect benchmarks for inductive theorem provers which can be 
+shared among developers and users. The recent increase of 
+interest in automated inductive theorem proving has also 
+increased the demands for evaluation and comparison between 
+systems. Our benchmark suite aims to become the standard shared 
+benchmark suite for inductive theorem provers. We expect the 
+benchmark suite to continuously grow as more problems are 
+submitted by the community. New challenge problems will promote 
+new developments of provers which will greatly benefit both 
+developers and users of inductive theorem provers. 
 \end{abstract}
 
 \section{Introduction}
 
-We have recently seen increased interest in inductive theorem proving, both with specialised provers such as IsaPlanner, Zeno and HipSpec \cite{hipspecCADE,dixon2007isaplanner,zeno}, SMT-solvers such as CVC4 \cite{cvc4}, the auto-active prover Dafny \cite{dafny}, recent work on the first-order SPASS prover \cite{SPASSInduction}, as well as some support in proof assistants \cite{hipster,acl2}.
+We have recently seen increased interest in inductive theorem 
+proving, both with specialised provers such as IsaPlanner, Zeno 
+and HipSpec \cite{hipspecCADE,dixon2007isaplanner,zeno}, 
+SMT-solvers such as CVC4 \cite{cvc4}, the auto-active prover 
+Dafny \cite{dafny}, recent work on the first-order SPASS prover 
+\cite{SPASSInduction}, as well as some support in proof 
+assistants \cite{hipster,acl2}.
 
-To ease evaluation and development, and compare the relative strengths of the different systems, it is important to have good standard benchmarks. The contribution of this paper is an accessible standard benchmark suite for inductive theorem provers which can be extended by users and developers. The benchmarks are publicly available at:
+To ease evaluation and development, and compare the relative 
+strengths of the different systems, it is important to have good 
+standard benchmarks. The contribution of this paper is an 
+accessible standard benchmark suite for inductive theorem 
+provers which can be extended by users and developers. The 
+benchmarks are publicly available at:
 \begin{center}
 \url{https://github.com/tip-org/benchmarks}
 \end{center}
-We have so far collected 205 problems in the TIP benchmark suite. We invite the community to submit additional problems and challenges and expect the collection to continuously grow and provide new challenges for developers.
+We have so far collected 205 problems in the TIP benchmark 
+suite. We invite the community to submit additional problems and 
+challenges and expect the collection to continuously grow and 
+provide new challenges for developers.
 
 %% We do not yet discuss any special-purpose language features for expressing inductive problems in general. The benchmarks are therefore currently expressed in a subset of the WhyML specification language from the Why3 program verification system \cite{boogie11why3,Why3}. We have chosen this format as the Why3 system already provides translation tools from WhyML to various other common formats, such as SMT-LIB and versions of TPTP.
 %% In addition, the WhyML language is also easy for humans to read. The Why3 system relies on external provers to discharge proof obligations and is already connected to a wide variety of automated and interactive provers, including  Alt-Ergo, CVC3, Z3, E, SPASS, Vampire, Coq and PVS. We hope that the new benchmark suite will encourage the connection of automated inductive theorem provers to Why3.
