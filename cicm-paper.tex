@@ -135,8 +135,15 @@ removing higher-order functions by defunctionalisation
 target formats in this tool.
 
 \subsection*{Example}
-As an example of what the benchmarks look like, we show \texttt{prop12} from the IsaPlanner benchmark set (see Section~\ref{sec:isap} below), which states that the functions \texttt{drop} and \texttt{map} distribute over one another: \begin{center} \texttt{drop n (map f xs) = map f (drop n xs)}.\end{center}
-We declare two simple algebraic datatypes representing natural numbers and polymorphic lists.
+As an example of what the benchmarks look like, we show 
+\texttt{prop12} from the IsaPlanner benchmark set (see 
+Section~\ref{sec:isap} below), which states that the functions 
+\texttt{drop} and \texttt{map} distribute over one another: 
+\begin{center}
+\texttt{drop n (map f xs) = map f (drop n xs)}.
+\end{center}
+We declare two simple algebraic datatypes representing natural 
+numbers and polymorphic lists.
 
 \begin{code}
 (declare-datatypes (a)
@@ -144,7 +151,11 @@ We declare two simple algebraic datatypes representing natural numbers and polym
 (declare-datatypes () ((Nat (Z) (S (p Nat)))))
 \end{code}
 
-Next, we declare two recursive functions: \texttt{drop}, which recursively drops a given number of elements from the front of the list and \texttt{map}, which is a higher-order function applying the given unary function \texttt{f} to each element of a list.
+Next, we declare two recursive functions: \texttt{drop}, which 
+recursively drops a given number of elements from the front of 
+the list and \texttt{map}, which is a higher-order function 
+applying the given unary function \texttt{f} to each element of 
+a list.
 
 \begin{code}
 (define-funs-rec
@@ -183,7 +194,7 @@ Finally, the benchmark problem itself is declared with the keyword \texttt{asser
 Each benchmark file is stand-alone and only contains one property.
 
 \section{Sample Benchmarks}
-In this section we give a short overview of  some the problems currently available in the repository. We expect more to be added.
+In this section we give a short overview of some the benchmark problems currently available in the repository. At the moment, there are three different main sources of problems. We expect more to be added.
 
 \subsection{IsaPlanner's Rippling and Case-Analysis Benchmarks}
 \label{sec:isap}
@@ -196,7 +207,7 @@ This is another benchmark suite which has been used to evaluate several recent p
 This set contains 70 new benchmarks including, amongst others,
 properties of the Agda standard
 library\footnote{\url{https://github.com/agda/agda-stdlib}}
-implementation of integers on top of natural numbers, problems about natural numbers in binary representation, problems about regular expressions, binary search trees, grammars and skew heaps. The problems about regular expressions, grammars and heaps have to our knowledge not been fully automated yet and are offered as challenges!
+implementation of integers on top of natural numbers, problems about natural numbers in binary representation, various sorting functions with correctness properties expressed in alternative ways, problems about regular expressions, binary search trees, grammars and skew heaps. The problems about sorting, regular expressions, grammars and heaps have to our knowledge not all been fully automated yet and are offered as challenges!
 
 \section{Contribute to TIP}
 We invite the theorem proving community to contribute additional inductive
