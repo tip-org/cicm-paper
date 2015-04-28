@@ -51,16 +51,16 @@
 
 \maketitle
 
-\begin{abstract} This paper describes our initial efforts to 
-collect benchmarks for inductive theorem provers which can be 
-shared among developers and users. The recent increase of 
-interest in automated inductive theorem proving has also 
+\begin{abstract} This paper describes our collection of
+benchmarks for inductive theorem provers. 
+The recent spur of 
+interest in automated inductive theorem proving has 
 increased the demands for evaluation and comparison between 
-systems. Our benchmark suite aims to become the standard shared 
-benchmark suite for inductive theorem provers. We expect the 
-benchmark suite to continuously grow as more problems are 
-submitted by the community. New challenge problems will promote 
-new developments of provers which will greatly benefit both 
+systems. 
+We expect the benchmark suite to continually grow as more problems are 
+submitted by the community. 
+New challenge problems will promote 
+further development of provers which will greatly benefit both 
 developers and users of inductive theorem provers. 
 \end{abstract}
 
@@ -138,7 +138,7 @@ target formats in this tool.
 
 \subsection*{Example}
 As an example of what the benchmarks look like, we show 
-\texttt{prop12} from the IsaPlanner benchmark set (see 
+property 12 from the IsaPlanner benchmark set (see 
 Section~\ref{sec:isap} below), which states that the functions 
 \texttt{drop} and \texttt{map} distribute over one another: 
 \begin{center}
@@ -152,12 +152,10 @@ numbers and polymorphic lists.
   ((list (nil) (cons (head a) (tail (list a))))))
 (declare-datatypes () ((Nat (Z) (S (p Nat)))))
 \end{code}
-
-Next, we declare two recursive functions: \texttt{drop}, which 
-recursively drops a given number of elements from the front of 
-the list and \texttt{map}, which is a higher-order function 
-applying the given unary function \texttt{f} to each element of 
-a list.
+Next, we declare two recursive functions: \texttt{map}, which is a higher-order
+function applying a unary function \texttt{f} to each element of a
+list, and \texttt{drop}, which recursively drops a given number of elements
+from the front of the list.
 
 \begin{code}
 (define-funs-rec
@@ -165,6 +163,8 @@ a list.
   ((match xs
      (case nil (as nil (list b)))
      (case (cons y ys) (cons (@ f y) (map f ys))))))
+\end{code}
+\begin{code}
 (define-funs-rec
   ((par (a) (drop ((n Nat) (xs (list a))) (list a))))
   ((match n
@@ -175,15 +175,16 @@ a list.
          (case (cons y ys) (drop m ys)))))))
 \end{code}
 
-The definition illustrates several features of TIP:
+These definitions illustrate several features of TIP:
 \begin{itemize}
   \item Polymorphism: \verb|par| introduces type variables.
   \item Higher-order functions: \verb|(=> a b)| is the type of
-    functions from \verb|a| to \verb|b|, while \verb|@| applies
-    a first-class function to its argument.
-  \item Pattern-matching.
+    functions from \verb|a| to \verb|b|, and \verb|@| applies
+    first-class functions to their arguments.
+  \item Pattern-matching using \verb|match| and \verb|case|, which binds new variables.
 \end{itemize}
 
+\noindent
 Finally, the benchmark problem itself is declared with the keyword \texttt{assert-not}:
 
 \begin{code}
@@ -229,7 +230,7 @@ output TIP, SMT-LIB and WhyML, with some caveats:
     termination checker.
 \end{itemize}
 We encourage the community to request and contribute additional input
-and output formats to our toolchain.
+and output formats to our tool chain.
 
 \section{Conclusion and Further Work}
 
@@ -251,6 +252,13 @@ interestingness of the conjectures generated. A good theory
 exploration system may also be used to generate new benchmarks 
 for TIP.
 
+
+Another aim is to also support non-theorems, for evaluation of 
+tools for counter-example finding. This requires no extension to 
+the format at all, but it requires a standardization on how to 
+annotate problems with their expected answer (theorem or non-theorem), 
+as well as a common solution format.
+
 It is important to have good tool support if TIP is to be used 
 by the community. Our tool is currently in active development, 
 in order to support more input and output formats, as well as 
@@ -262,16 +270,9 @@ do not support the full language.
 
 In the future, we may want to extend the language to support a 
 richer variety of problems. For example, we may want to include 
-problems about lazy functions, co-datatypes, and functions that 
-possibly do not terminate.
+problems about lazy functions and co-datatypes.
 
 %We may in the future perhaps also want to include problems featuring functions in a programming language with lazy evaluation.
-
-Another aim is to also support non-theorems, for evaluation of 
-tools for counter-example finding. This requires no extension to 
-the format at all, but it requires a standardization on how to 
-annotate problem with their expected answer, as well as a common 
-solution format.
 
 \bibliographystyle{plain}
 \bibliography{bibfile}
